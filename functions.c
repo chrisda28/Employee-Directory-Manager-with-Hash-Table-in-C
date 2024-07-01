@@ -39,11 +39,17 @@ void insert_employee(employee emp)
 
 employee *find_employee(int id)
 {
-    int index = hash(id);
-    node *trav = table[index];
-
-
-
+    int index = hash(id);  //finding hash index
+    node *trav = table[index];  //starting the traversal
+    while (trav != NULL)
+    {
+        if (trav->emp.id == id)  // checking for inputted id
+        {
+            return &(trav->emp);  //returning address of employee struct within the node
+        }
+        trav = trav->next;  // traversing through the linked list
+    }
+    return NULL;  // if nothing is found, return NULL
 }
 
 
