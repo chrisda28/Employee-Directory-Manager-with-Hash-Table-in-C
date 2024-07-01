@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#include <functionality.h>
+#include "functionality.h"
 
 // sets each bucket of hash table to NULL
 void initialize_table()
@@ -14,33 +14,35 @@ void initialize_table()
 }
 
 
-int index hash(int id)
+int hash(int id)
+{
     return id % HASH_MAX;  // taking remainder of ID divided by HASH_MAX
+}
+    
+
 
 void insert_employee(employee emp)
 {
     int hash_index = hash(emp.id);  // finds hash index
-    table[hash_index] = emp;
     node *new_node = malloc(sizeof(node));
     if (new_node == NULL)  // error handling
         {
-            printf("Memory related error\n");
-            return NULL;
+            printf("Memory allocation error\n");
+            exit(EXIT_FAILURE);  // Terminate the program upon malloc failure
         }
-    if (table[hash_index] != NULL)  // prepend new_node to beginning of linked list
-    {
-        
-    }
-    else
-        table[hash_index] = new_node;  // directly assign
-
-
-
+    // prepend new_node to beginning of linked list by implementing chaining
+    new_node->emp = emp;
+    new_node->next = table[hash_index];  // links new_node into linked list
+    table[hash_index] = new_node;  // updates new_node as head of linked list
 }
 
 
 employee *find_employee(int id)
 {
+    int index = hash(id);
+    node *trav = table[index];
+
+
 
 }
 
