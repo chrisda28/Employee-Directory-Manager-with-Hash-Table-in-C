@@ -18,7 +18,13 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
     while (program_on == true)
     {
         printf(" Type a number below\n 1. Add new employee\n 2. Find employee\n 3. Update employee information\n 4. Delete employee\n 5. Print all employees\n 6. Exit\n");
-        scanf("%d", &choice);
+        int user_choice1 = scanf("%d", &choice);
+        if (user_choice1 != 1)  // error handling. Scanf should return 1 if it read successfully
+        {
+            printf("Invalid input. Rerun the program and closely follow directions")
+            program_on = false;
+            return 1;
+        }
 
         if (choice == 1)
             {
