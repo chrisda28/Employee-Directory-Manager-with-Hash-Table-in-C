@@ -18,7 +18,30 @@ int hash(int id)
 {
     return id % HASH_MAX;  // taking remainder of ID divided by HASH_MAX
 }
-    
+
+
+void load_csv()
+{
+    FILE *file = fopen("sampledata.csv", "r");
+    if (file == NULL)
+        {
+            printf("Couldn't open file\n");
+            return;
+        }
+    char buffer[100];  //sets max length of a line it can read
+    while (fgets(buffer, 100, file) != NULL)  //going until the end of file
+    {
+        char * token;
+        employee emp;
+
+        token = strtok(buffer, ",");  // we are splitting the lines into tokens using the comma as delimiter, and this returns a NULL pointer. 
+        emp.id = atoi(token); // turning the token to an integer
+        token = strtok(NULL, ",");  // gets the next token
+        strcpy(emp.name, token); //copy token to name field
+        insert_employee(emp);  // insert it to hash table
+    }
+    fclose(file);
+}
 
 
 void insert_employee(employee emp)
@@ -64,29 +87,9 @@ void print_table()
 
 }
 
-void load_data() {
-    FILE* file = fopen("sampledata.csv", "r");
+void free_table()
+{
 
-    if (file == NULL) {
-        printf("Could not open file\n");
-        return;
-    }
-
-    char line[100];
-    while (fgets(line, sizeof(line), file)) {
-        char* id = strtok(line, ",");
-        char* name = strtok(NULL, ",");
-        char* position = strtok(NULL, ",");
-        char* department = strtok(NULL, ",");
-
-        employee emp;
-        emp.id = atoi(id);
-        strncpy(emp.name, name, sizeof(emp.name));
-        strncpy(emp.position, position, sizeof(emp.position));
-        strncpy(emp.department, department, sizeof(emp.department));
-
-        insert_employee(emp);
-    }
-
-    fclose(file);
 }
+
+
