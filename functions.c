@@ -63,3 +63,30 @@ void print_table()
 {
 
 }
+
+void load_data() {
+    FILE* file = fopen("sampledata.csv", "r");
+
+    if (file == NULL) {
+        printf("Could not open file\n");
+        return;
+    }
+
+    char line[100];
+    while (fgets(line, sizeof(line), file)) {
+        char* id = strtok(line, ",");
+        char* name = strtok(NULL, ",");
+        char* position = strtok(NULL, ",");
+        char* department = strtok(NULL, ",");
+
+        employee emp;
+        emp.id = atoi(id);
+        strncpy(emp.name, name, sizeof(emp.name));
+        strncpy(emp.position, position, sizeof(emp.position));
+        strncpy(emp.department, department, sizeof(emp.department));
+
+        insert_employee(emp);
+    }
+
+    fclose(file);
+}

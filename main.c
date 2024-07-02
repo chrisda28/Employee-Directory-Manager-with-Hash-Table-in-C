@@ -5,6 +5,7 @@
 #include <string.h>
 #include <strings.h>
 #include "functionality.h"
+#include "functions.c"
 
 
 
@@ -17,6 +18,8 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
 
     while (program_on == true)
     {
+        initialize_table();
+        load_data();
         printf(" Type a number below\n 1. Add new employee\n 2. Find employee\n 3. Update employee information\n 4. Delete employee\n 5. Print all employees\n 6. Exit\n");
         int success_indicator = scanf("%d", &choice);
         if (success_indicator != 1)  // error handling. Scanf should return 1 if it read successfully
@@ -28,7 +31,7 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
 
         if (choice == 1)
             {
-                printf("Type 7 digit employee ID below.");
+                printf("Type 5 digit employee ID below.");
                 // int inputted_id = scanf"%d", &initial_id;  // i dont know how to grab the requisite data and pass it in through the correct struct (employee)
                 // like i could keep grabbing everything through scanf but how i do i convert it into employee data from that, theres gotta be a better way.
 
@@ -36,8 +39,14 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
             }
         else if (choice == 2)
         {
-            printf("Type 7 digit employee ID below.");
-            int inputted_id = scanf("%d", &initial_id);
+            printf("Type 5 digit employee ID below.");
+            int inputted_id = scanf("%d", initial_id);
+            if (inputted_id != 1)  // error handling. Scanf should return 1 if it read successfully
+        {
+            printf("Invalid input. Rerun the program and closely follow directions");
+            program_on = false;
+            return 1;
+        }
             employee *desired_employee = find_employee(initial_id);
             if (desired_employee == NULL) 
             {
@@ -46,6 +55,7 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
             else 
             {
                 printf("Employee found at address: %p\n", (void *)desired_employee);
+                program_on = false;
         // Print other details of the employee if needed
             }
 
