@@ -26,7 +26,7 @@ typedef struct node {
 
 node *table[HASH_MAX];
 
-
+void load_csv();
 void initialize_table();
 void insert_employee(employee emp);
 employee *find_employee(int id);
