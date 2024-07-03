@@ -19,7 +19,7 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
     while (program_on == true)
     {
         initialize_table();
-        load_data();
+        load_csv();
         printf(" Type a number below\n 1. Add new employee\n 2. Find employee\n 3. Update employee information\n 4. Delete employee\n 5. Print all employees\n 6. Exit\n");
         int success_indicator = scanf("%d", &choice);
         if (success_indicator != 1)  // error handling. Scanf should return 1 if it read successfully

@@ -23,7 +23,7 @@ int hash(int id)
 void load_csv()
 {
     FILE *file = fopen("sampledata.csv", "r");
-    if (file == NULL)
+    if (file == NULL)  // error handling
         {
             printf("Couldn't open file\n");
             return;
@@ -31,7 +31,7 @@ void load_csv()
     char buffer[100];  //sets max length of a line it can read
     while (fgets(buffer, 100, file) != NULL)  //going until the end of file
     {
-        char * token;
+        char *token;
         employee emp;
 
         token = strtok(buffer, ",");  // we are splitting the lines into tokens using the comma as delimiter, and this returns a NULL pointer. 
@@ -85,7 +85,7 @@ void delete_employee(int id)
     {
         if(trav->emp.id == id)
         {
-            break;
+            break;  //exit loop once we find to-be-deleted employee
 
         }
         prev = trav;  // keeping prev pointer one step behind trav
@@ -98,7 +98,7 @@ void delete_employee(int id)
         printf("Could not find desired employee");
         return;
     }
-    if (prev = NULL)  // if the node to be deleted is the head of linked list, then have to update head of the linkedlist
+    if (prev == NULL)  // if the node to be deleted is the head of linked list, then have to update head of the linkedlist
     {
         table[delete_index] = trav->next;
     }
