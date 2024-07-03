@@ -29,17 +29,60 @@ void load_csv()
             return;
         }
     char buffer[100];  //sets max length of a line it can read
+    int employee_counter = 0; 
+    fgets(buffer, 100, file);  // Skip the header line
     while (fgets(buffer, 100, file) != NULL)  //going until the end of file
     {
         char *token;
         employee emp;
+        int all_fields_present = 1; //flag to ensure all fields are present, 1 means yes, and 0 will mean no
 
-        token = strtok(buffer, ",");  // we are splitting the lines into tokens using the comma as delimiter, and this returns a NULL pointer. 
-        emp.id = atoi(token); // turning the token to an integer
+        token = strtok(buffer, ",");  // initializes the tokenization process. we are splitting the lines into tokens using the comma as delimiter, and this returns a NULL pointer. 
+        if (token != NULL)
+        {
+            emp.id = atoi(token); // turning the token to an integer
+        }
+        else
+            all_fields_present = 0;
+
+        token = strtok(NULL, ',');  // get pointer to next token, with NULL argument telling it to continue tokenizing the same string
+        if (token != NULL)
+        {
+            strncpy(emp.name, token, LENGTH - 1); //copy token to name field
+            emp.name[LENGTH - 1] = '\0';
+        }
+        else
+            all_fields_present = 0;
+
         token = strtok(NULL, ",");  // gets the next token
-        strcpy(emp.name, token); //copy token to name field
-        insert_employee(emp);  // insert it to hash table
+        if (token != NULL)
+        {
+            strncpy(emp.position, token, LENGTH - 1); //copy token to position field
+            emp.position[LENGTH - 1] = '\0';
+        }
+        else
+            all_fields_present = 0;
+        
+        token = strtok(NULL, ",");  // gets the next token
+        if (token != NULL)
+        {
+            strncpy(emp.department, token, LENGTH - 1); //copy token to department field
+            emp.department[LENGTH - 1] = '\0';
+        }
+        else
+            all_fields_present = 0;
+        
+    
+        if (all_fields_present == 1)
+        {
+            insert_employee(emp);  // insert it to hash table
+            employee_counter++;
+        }
+        else
+            printf("Uncomplete record, skipping this line.\n");
+        
     }
+    printf("%i", employee_counter); //tells how many employees loaded in
     fclose(file);
 }
 
@@ -90,9 +133,8 @@ void delete_employee(int id)
         }
         prev = trav;  // keeping prev pointer one step behind trav
         trav = trav->next;  // traversing through the linkedlist
-        
-    
     }
+
     if (trav == NULL)
     {
         printf("Could not find desired employee");
@@ -105,18 +147,27 @@ void delete_employee(int id)
     else
         prev->next = trav->next;  // prev is the node before the one we want to delete, so we are skipping over trav with this line
     free(trav);  // freeing the memory of the orphaned node
-
 }
 
 
-void print_table()
+void free_table()  
 {
-
-}
-
-void free_table()
-{
-
+    if (table == NULL)
+        return;
+    for (int i = 0; i < HASH_MAX; i++)  // iterates through each bucket of the hash table
+    {
+        if (table[i] == NULL)
+            continue; //skips the current iteration since nothing is there
+        node *trav;  // initialize traversal pointer
+        trav = table[i];  // sets trav to table index
+        while (trav != NULL)  // iterates through the linked list
+        {
+            node* after = trav->next;  //saving what trav points to before doing anything else
+            free(trav);  //THIS FREES THE MEMORY THAT TRAV POINTS TO!!! 
+            trav = after; //moving to the next node
+        }
+        table[i] = NULL;
+    }
 }
 
 
