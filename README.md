@@ -39,4 +39,4 @@ The program includes basic error handling for file operations, memory allocation
 Error handling could be improved for edge cases, and for user inputs. Also, error messages could be more descriptive. 
 
 ## Author
-name here
+Christian Asimou
