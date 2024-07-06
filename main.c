@@ -19,7 +19,7 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
     
     while (program_on == true)
     {
-        printf(" Type a number below\n 1. Add new employee\n 2. Find employee\n 3. Delete employee\n 4. Print all employees\n 5. Exit\n");
+        printf(" Type a number below\n 1. Find employee\n 2. Delete employee\n 3. Print all employees\n 4. Exit\n");
         int success_indicator = scanf("%d", &choice);
         if (success_indicator != 1)  // error handling. Scanf should return 1 if it read successfully
         {
@@ -29,17 +29,9 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
         }
 
         if (choice == 1)
-            {
-                printf("Type 5 digit employee ID below.");
-                // int inputted_id = scanf"%d", &initial_id;  // i dont know how to grab the requisite data and pass it in through the correct struct (employee)
-                // like i could keep grabbing everything through scanf but how i do i convert it into employee data from that, theres gotta be a better way.
-
-                program_on = false;
-            }
-        else if (choice == 2)
         {
             int initial_id = 0;
-            printf("Type 5 digit employee ID below.");
+            printf("Type 5 digit employee ID.");
             int inputted_id = scanf("%d", &initial_id);
             if (inputted_id != 1)  // error handling. Scanf should return 1 if it read successfully
         {
@@ -64,7 +56,7 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
             }
         }
     
-        else if (choice == 3)
+        else if (choice == 2)
         {
             int initial_id = 0;
             printf("Type 5 digit employee ID below.");
@@ -92,21 +84,26 @@ int main( int argc, char *argv[])  // remember to add error checking for CML arg
             
         }
 
-        else if (choice == 4)
+        else if (choice == 3)
         {
-            for (int i = 0; i < table[i], i++)
+            for (int i = 0; i < HASH_MAX; i++)  //iterating through each bucket of hash table
             {
-                while (table[i] != NULL)
+                if (table[i] == NULL)   //skipping the iteration where head of linkedlist is empty
+                    continue;
+                node *trav; // initialize traversal pointer
+                trav = table[i];  // set it to table index (head of linked list)
+                while (trav != NULL)  //iterating through each linkedlist that makes up each bucket
                 {
-                    
-
-
+                    printf("Employee Name: %s\n", trav->emp.name);
+                    printf("Employee ID: %d\n", trav->emp.id);
+                    printf("Employee Department: %s\n", trav->emp.department);
+                    printf("Employee Position: %s\n", trav->emp.position);
+                    trav = trav->next;  // move to next node
                 }
             }
-
         }
 
-        else if (choice == 5)
+        else if (choice == 4)
         {
             program_on = false;
         }

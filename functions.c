@@ -45,7 +45,7 @@ void load_csv()
         else
             all_fields_present = 0;
 
-        token = strtok(NULL, ',');  // get pointer to next token, with NULL argument telling it to continue tokenizing the same string
+        token = strtok(NULL, ",");  // get pointer to next token, with NULL argument telling it to continue tokenizing the same string
         if (token != NULL)
         {
             strncpy(emp.name, token, LENGTH - 1); //copy token to name field
@@ -82,7 +82,7 @@ void load_csv()
             printf("Uncomplete record, skipping this line.\n");
         
     }
-    printf("%i", employee_counter); //tells how many employees loaded in
+    printf("%i\n", employee_counter); //tells how many employees loaded in
     fclose(file);
 }
 
@@ -166,7 +166,7 @@ void free_table()
             free(trav);  //THIS FREES THE MEMORY THAT TRAV POINTS TO!!! 
             trav = after; //moving to the next node
         }
-        table[i] = NULL;
+        table[i] = NULL;  //setting head of linkedlist to null
     }
 }
 

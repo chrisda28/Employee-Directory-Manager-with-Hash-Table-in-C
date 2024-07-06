@@ -7,7 +7,7 @@
 
 
 #define LENGTH 50  // sets maximum length
-#define HASH_MAX 26
+#define HASH_MAX 26  //sets length of hash table
 
 
 typedef struct{
@@ -26,6 +26,7 @@ typedef struct node {
 
 node *table[HASH_MAX];
 
+char *strtok(char *str, const char *delim);
 void load_csv();
 int hash(int id);
 void initialize_table();
