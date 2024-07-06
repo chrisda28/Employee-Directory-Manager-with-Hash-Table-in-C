@@ -27,10 +27,11 @@ typedef struct node {
 node *table[HASH_MAX];
 
 void load_csv();
+int hash(int id);
 void initialize_table();
 void insert_employee(employee emp);
 employee *find_employee(int id);
 void delete_employee(int id);
-void print_table();
+void free_table();
 
 #endif
